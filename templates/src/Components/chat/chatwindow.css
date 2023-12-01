@@ -1,0 +1,188 @@
+/* Set the chat-window to fill the entire viewport height (100vh) */
+.chat-window {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Divide the chat-window into three parts */
+  .chat-header {
+    flex: 10%; /* 5% of the parent's height */
+    background-color: #3f3f69; /* Example background color for the header */
+  }
+  
+  .chat-container {
+    flex: 89%; /* 85% of the parent's height */
+    background-color: #f0f0f0; /* Example background color for the container */
+    overflow-y: auto; /* Add scrolling if the content exceeds the container height */
+    display:inline-flex;
+    flex-direction: column;
+  }
+  
+  .sent-msg, .recieved-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 25px;
+    border-radius: 30px;
+    height: auto;
+}
+
+.read-btn {
+  background: none;
+  color: blue;
+  border: none;
+  text-decoration: underline;
+  position: relative;
+  align-self: flex-end;
+}
+
+.sent-msg{
+  background: #414194;
+  margin-right: 10px;
+  margin-left: auto;
+  color: white;
+}
+
+.sent-msg p, .recieved-msg p {
+  margin-bottom: 0;
+}
+
+.recieved-msg{
+  background: white;
+  margin-right: auto;
+  margin-left: 10px;
+  color: #414194;
+  border: 1px solid #4141947d;
+}
+
+
+  .chat-footer {
+    flex: auto; /* 10% of the parent's height */
+    display: inline-flex;
+    flex-direction: row;
+    padding: 10px;
+  }
+  
+  .chat-footer .input-div{
+    flex:60%;
+    background-color: red;
+  }
+
+  #user-input:active, #user-input:focus-within{
+    border: 1px solid #414194;
+  }
+
+  #user-input {
+    width: 100%;
+    min-height: 20px;
+    box-sizing: border-box;
+    padding: 9px 18px 11px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 21px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .input-text-group {
+    position: relative;
+    flex: auto;
+  }
+  
+  .input-placeholder {
+    color: #a0a0a0;
+    top: 0;
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    opacity: 1;
+    transition: 0.2s padding ease-in-out;
+  }
+
+  
+
+  #input-text {
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    z-index: 1;
+    max-height: 100px;
+    min-height: 20px;
+    direction: ltr;
+    padding: 0 0 0 2px;
+    outline: 0;
+    transition: 0.2s padding ease-in-out;
+  }
+  
+  
+  #input-text:focus + .input-placeholder {
+    padding: 0 6px 0px;
+  }
+  
+  #input-text:focus {
+    padding: 0 6px 0px;
+  }
+
+ .send-btn {
+    border-radius: 30px;
+    width: 70px;
+    height: 45px;
+    border: none;
+    margin-left: 10px;
+    position: relative;
+    color: #414194;
+    
+}
+
+.send-btn:hover{
+  color: #414194;
+  border: 1px solid #4141947d;
+}
+
+.input-actions {
+  display: inline-flex;
+  flex-direction: row;
+  align-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.transaction-card {
+  display: flex;
+  width: auto;
+  background: #ff00000f;
+  box-shadow: 0px 0px 9px 0px #ff00005e;
+  border-radius: 20px;
+  padding: 10px 20px 0px 20px;
+  margin: 10px;
+  font-size: 0.8rem;
+  flex-direction: row;
+}
+
+.transaction-card p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  margin-left: 20px;
+  margin-right: 20px;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.transaction-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.initial-prompt{
+  display: flex;
+}
