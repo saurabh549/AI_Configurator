@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
+from .utils import extract_data_from_prompt,create_exotel_campaign
 
 # Create your views here.
 
@@ -56,7 +57,11 @@ class MessageAPI(APIView):
             
             if user_id in app_users:
                 prompt_data = extract_data_from_prompt(message)
-                exotel_response = create_exotel_campaign()
+                exotel_response = create_exotel_campaign(prompt_data)
+                if exotel_response.status == 200:
+                    response['message'] = "Your Campaign is created successfull, you can check it on DashBoard."
+                    response['status'] = 200
+                    return Response(data=response, status=200)
         except Exception as e:
             pass
         return Response(data=response, status=500)
