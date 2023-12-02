@@ -1,3 +1,5 @@
+from datetime import datetime
+import hashlib
 from langchain.llms import AzureOpenAI
 from langchain.schema import HumanMessage
 import json
@@ -33,3 +35,10 @@ This function will call the exotel's API to create the campaign.
 """
 def create_exotel_campaign():
     pass
+
+
+def generate_prompt_id(user):
+    prompt_id = user + str(datetime.now())
+    prompt_id = hashlib.shake_128(prompt_id.encode())
+    prompt_id = prompt_id.hexdigest(4)
+    return "prompt_" + prompt_id

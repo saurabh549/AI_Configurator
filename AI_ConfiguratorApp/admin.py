@@ -9,3 +9,6 @@ admin.site.register(AppUser,AppUserAdmin)
 class ConversationModelAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'receiver', 'created_on')
 admin.site.register(ConversationModel,ConversationModelAdmin)
+
+
+admin.site.register(Prompts)
