@@ -1,0 +1,12 @@
+Install react in Ubuntu: https://github.com/nvm-sh/nvm
+
+1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+2. wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+3. export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+4. nvm install node
+5. nvm install create-react-app (optional)
+6. cd templates/
+7. npm init
+8. npm start

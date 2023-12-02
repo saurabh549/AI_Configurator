@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .utils import extract_data_from_prompt,create_exotel_campaign
-
+import sys
 # Create your views here.
 
 
@@ -50,18 +50,52 @@ class MessageAPI(APIView):
                 response['message'] = "Invalid receiver"
                 return Response(data=response,status=400)
 
-            app_users = []
-            user_objs = AppUser.objects.all()
-            for i in user_objs:
-                app_users.append(i.user_id)
+            try:
+                user_obj = AppUser.objects.get(user_id=user_id)
+            except:
+                response['message'] = "You are not the configrator user."
+                response['status'] = 403
+                return Response(data=response, status=200)
             
-            if user_id in app_users:
-                prompt_data = extract_data_from_prompt(message)
-                exotel_response = create_exotel_campaign(prompt_data)
-                if exotel_response.status == 200:
-                    response['message'] = "Your Campaign is created successfull, you can check it on DashBoard."
-                    response['status'] = 200
-                    return Response(data=response, status=200)
+            if user_obj:
+                
+                
+                # creating or getting prompt id
+                prompt_id = data.get("prompt_id", None)
+                if prompt_id:
+                    prompt_obj = Prompts.objects.filter(prompt_id=prompt_id).first()
+                else:
+                    prompt_obj = Prompts.objects.create(user=user_obj)
+
+                # storing user conversation in prompt
+                message_obj = ConversationModel.objects.create(
+                    user_id = user_obj,
+                    message = message,
+                    receiver = receiver
+                )
+                
+                prompt_obj.conversations.add(message_obj)  # saving conversation into prompt
+
+                # prompt_data = extract_data_from_prompt(message)
+                # exotel_response = create_exotel_campaign(prompt_data)
+                # if exotel_response.status == 200:
+                #     response['message'] = "Your Campaign is created successfull, you can check it on DashBoard."
+                #     response['status'] = 200
+                #     return Response(data=response, status=200)
+                response['message']   = "Your Campaign is created successfull, you can check it on DashBoard."
+                message_obj = ConversationModel.objects.create(
+                    user_id = user_obj,
+                    message = response['message'],
+                    receiver = user_obj.user_id
+                )
+                prompt_obj.conversations.add(message_obj) # saving conversation into prompt
+                
+                response['status']    = 200
+                response['prompt_id'] = prompt_obj.prompt_id
+                response['receiver']  = user_obj.user_id
+                return Response(response, status=200)
         except Exception as e:
-            pass
-        return Response(data=response, status=500)
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            response['error']   = str(e) + str(exc_tb.tb_lineno)
+            response['status']    = 500
+            return Response(response, status=500)

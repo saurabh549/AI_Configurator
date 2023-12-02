@@ -8,16 +8,16 @@ const Message = ({ content, maxLength = 250 }) => {
         setExpanded(!expanded);
     };
 
-    const truncatedContent = expanded ? content : content.slice(0, maxLength);
+    // const truncatedContent = expanded ? content : content.slice(0, maxLength);
 
     return (
         <>
-            <p>{truncatedContent}</p>
-            {content.length > maxLength && (
+            <p>{content}</p>
+            {/* {content.length > maxLength && (
                 <button className="read-btn" onClick={toggleExpanded}>
                     {expanded ? "Read Less" : "Read More"}
                 </button>
-            )}
+            )} */}
         </>
     );
 };
@@ -41,7 +41,7 @@ function ChatContainer({ messages }) {
         <div className="chat-container" ref={containerRef}>
             {messages.map((message, index) => (
                 <div key={index} className={message.receiver === BASE_USER ? "recieved-msg" : "sent-msg"}>
-                    <Message content={message.message} maxLength={1000} />
+                    <p>{message.message}</p>
                 </div>
             ))}
         </div>

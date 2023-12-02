@@ -6,9 +6,9 @@ import "./chatwindow.css";
 import { CHAT_USER, APIBASE_DETAIL } from "../../constants";
 import axios from "axios";
 
-function sendMessageToBot(message){
+function sendMessageToBot(message, promptID){
   const baseURL = APIBASE_DETAIL.messageAPI.endpoint
-  const payload = APIBASE_DETAIL.messageAPI.requestBody(message)
+  const payload = APIBASE_DETAIL.messageAPI.requestBody(message, promptID)
   
   // Axios request to send message to bot
   return axios
@@ -27,18 +27,19 @@ function sendMessageToBot(message){
 
 function Chat() {
   const [messages, setMessages] = useState([]);
-
+  const [promptID, setPromptID] = useState(null);
 
   async function appendMessage(message, isUserMessage=false) {
     setMessages((prevMessages) => [...prevMessages, message]);
     if(isUserMessage){
-      const responseData = await sendMessageToBot(message);
+      const responseData = await sendMessageToBot(message, promptID);
       let response = {
         key: "2",
-        message: responseData.response,
+        message: responseData.data.message,
         sender: CHAT_USER,
-        receiver: responseData.receiver
+        receiver: responseData.data.receiver
       }
+      setPromptID(responseData.data.prompt_id);
       setMessages((prevMessages) => [...prevMessages, response]);
     }
   }

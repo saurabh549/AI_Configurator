@@ -7,10 +7,11 @@ export const BASE_USER = "Exotel";
 export const APIBASE_DETAIL = {
     messageAPI : {
         endpoint     : DOMAIN_LOCALHOST + "message/",
-        requestBody : (data) => ({
+        requestBody : (data, promptID) => ({
             "user_id" : BASE_USER, 
             "message"  : data.message, 
-            "receiver" : data.receiver
+            "receiver" : data.receiver,
+            "prompt_id": promptID
         }) 
     }
 }
